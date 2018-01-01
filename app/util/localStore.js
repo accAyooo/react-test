@@ -14,7 +14,7 @@ export default {
     setItem: function (key, value) {
         try {
             localStorage.setItem(key, value);
-        } catch {
+        } catch (ex){
             if (__DEV__) {
                 console.error('localStorage error:' + ex.message);
             }
