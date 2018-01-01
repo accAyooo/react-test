@@ -58,5 +58,5 @@ typings/
 .env
 
 # idea config file
-.idea
+.idea/
 
