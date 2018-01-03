@@ -1,12 +1,18 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 
 //Get user city info
 import { CITY_NAME } from '../config/localStorage-config';
 import localStore from '../util/localStore';
 
+import * as userInfoActionsFromOtherFile from '../actions/userInfo';
+
 class App extends React.Component {
-    constructor(props) {
+    constructor(props, context) {
         super(props);
         this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate;
         this.state = {
@@ -24,14 +30,15 @@ class App extends React.Component {
         }
 
         // 将取出的城市信息放入到 REDUX 中
-
-
+        this.props.userInfoActions.update({
+            cityName: cityName
+        })
 
         setTimeout(() => {
             this.setState({
                 initDone: true
             })
-        },2000)
+        },0)
     }
 
     render() {
@@ -47,4 +54,19 @@ class App extends React.Component {
     }
 }
 
-export default App;
+// react bind function
+function mapStateToProps(state) {
+    return {}
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        userInfoActions: bindActionCreators(userInfoActionsFromOtherFile, dispatch)
+    }
+}
+
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App))
+

@@ -1,5 +1,8 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import HomeHeader from "../common/HomeHeader";
+import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 class Home extends React.Component {
     constructor(props, context) {
@@ -9,9 +12,24 @@ class Home extends React.Component {
 
     render() {
         return (
-            <p>hello world!</p>
+            <div>
+                <HomeHeader cityName={this.props.userInfo.cityName}/>
+            </div>
         )
     }
 }
 
-export default Home;
+function mapStateToProps(state) {
+    console.log(state)
+    return {
+        userInfo: state.userInfo
+    };
+}
+function mapDispatchToProps() {
+    return {};
+}
+
+export default withRouter(connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home));
